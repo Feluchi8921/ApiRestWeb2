@@ -15,16 +15,18 @@ class ViajeApiController {
         // lee el body del request
         $this->data = file_get_contents("php://input");
     }
-
+    //----------------------------Funcion geData (Ok)--------------------//
     private function getData() {
         return json_decode($this->data);
     }
 
+    //----------------------------Funcion getAll (Ok)--------------------//
     public function getViajes($params = null) {
         $viajes = $this->model->getAll();
         $this->view->response($viajes);
     }
 
+    //----------------------------Funcion get (Ok)--------------------//
     public function getViaje($params = null) {
         // obtengo el id del arreglo de params
         $id = $params[':ID'];
@@ -35,9 +37,11 @@ class ViajeApiController {
             $this->view->response($viaje);
         }
         else {
-            $this->view->response("La tarea con el id=$id no existe", 404);
+            $this->view->response("El viaje con el id=$id no existe", 404);
         }
     }
+
+    //----------------------------Funcion delete (Ok)--------------------//
 
     public function deleteViaje($params = null) {
         $id = $params[':ID'];
@@ -48,20 +52,20 @@ class ViajeApiController {
             $this->view->response($viaje);
         } 
         else {
-            $this->view->response("La tarea con el id=$id no existe", 404);
+            $this->view->response("El viaje con el id=$id no existe", 404);
     }
     }
+    //----------------------------Funcion insert (Ok)--------------------//
     
     public function insertViaje($params = null) {
         $viaje = $this->getData();
-//se puede poner empty($_GET) de este estilo? queda muy largo
         if (empty($viaje->salida) || empty($viaje->destino) || empty($viaje->dia) || empty($viaje->horario) ||
          empty($viaje->lugares) || empty($viaje->mascota) || empty($viaje->precio) || empty($viaje->datos) || empty($viaje->id_automovil)) {
             $this->view->response("Complete los datos", 400);
         } 
         else {
             $id = $this->model->insert($viaje->salida, $viaje->destino, $viaje->dia, $viaje->horario, $viaje->lugares, $viaje->mascota, $viaje->precio, $viaje->datos, $viaje->id_automovil);
-            $this->view->response("La tarea se insertó con éxito con el id=$id", 201);
+            $this->view->response("El viaje se insertó con éxito con el id=$id", 201);
         }
     }
 
