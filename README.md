@@ -2,7 +2,7 @@
 Una API REST sencilla para manejar un CRUD de tareas
 
 ## Importar la base de datos
-- importar desde PHPMyAdmin (o cualquiera) database/db_tasks.php
+- importar desde PHPMyAdmin (o cualquiera) database/db_viajes.php
 
 
 ## Pueba con postman
