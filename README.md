@@ -6,4 +6,8 @@ Una API REST sencilla para manejar un CRUD de tareas
 
 
 ## Pueba con postman
-El endpoint de la API es: http://localhost/tucarpetalocal/todolist-rest/api/tareas
+Los endpoint de la API es: 
+Para obtener todos los viajes: http://localhost/refactor-rest/api/viajes
+Para obtener un viaje por id: http://localhost/refactor-rest/api/viajes/id
+Para obtener todos los automóviles: http://localhost/refactor-rest/api/automoviles
+Para obtener un automovil por id: http://localhost/refactor-rest/api/automovil/id
