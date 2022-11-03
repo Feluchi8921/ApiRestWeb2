@@ -11,6 +11,8 @@ $router->addRoute('viajes', 'GET', 'viajeApiController', 'getViajes');
 $router->addRoute('viajes/:ID', 'GET', 'viajeApiController', 'getViaje');
 $router->addRoute('viajes/:ID', 'DELETE', 'viajeApiController', 'deleteViaje');
 $router->addRoute('viajes', 'POST', 'viajeApiController', 'insertViaje'); 
+//ver si es asi el ordenar
+$router->addRoute('viajes/ordenar', 'GET', 'viajeApiController', 'ordenarViaje'); 
 $router->addRoute('automoviles', 'GET', 'automovilApiController', 'getAutomoviles');
 $router->addRoute('automoviles/:ID', 'GET', 'automovilApiController', 'getAutomovil');
 $router->addRoute('automoviles/:ID', 'DELETE', 'automovilApiController', 'deleteAutomovil');

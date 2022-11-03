@@ -20,10 +20,29 @@ class ViajeApiController {
         return json_decode($this->data);
     }
 
-    //----------------------------Funcion getAll (Ok)--------------------//
-    public function getViajes($params = null) {
-        $viajes = $this->model->getAll();
-        $this->view->response($viajes);
+    //----------------------------Funcion getAll con ordenar(Ok)--------------------//
+    public function getViajes() {
+        //si le paso ordenar
+        //agregar si ordenar=desc entonces llama a la funcion ordenar descen sino llama asc
+        $order=$_GET['order'];
+        //var_dump($order);
+        if(!empty($order==='asc')){
+            $order=ucfirst($order); //paso el parametro a mayuscula para poder usarlo en MySQL
+            $viajes = $this->model->orderViaje($order);
+            $this->view->response($viajes);
+        }
+        if (!empty($order==='desc')){
+            $order=ucfirst($order);
+            $viajes = $this->model->orderViaje($order);
+            $this->view->response($viajes);
+        }
+        
+        //sino devuelve todo desordenado
+        else{
+            $viajes = $this->model->getAll();
+            $this->view->response($viajes);
+        }
+        
     }
 
     //----------------------------Funcion get (Ok)--------------------//
@@ -68,5 +87,6 @@ class ViajeApiController {
             $this->view->response("El viaje se insertó con éxito con el id=$id", 201);
         }
     }
+    
 
 }

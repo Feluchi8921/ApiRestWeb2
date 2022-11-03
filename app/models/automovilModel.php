@@ -26,6 +26,15 @@ class AutomovilModel
 
         return $automoviles;
     }
+    //----------------------------Funcion ordenar(Ok) --------------------//
+    public function orderAutomovil($order)
+    {
+        $query = $this->db->prepare("SELECT * FROM automoviles ORDER BY marca $order");
+        $query->execute();
+        $automoviles = $query->fetchAll(PDO::FETCH_OBJ);
+        var_dump($automoviles);
+        return $automoviles;
+    }
 
     //----------------------------Funcion get (ok)--------------------//
 

@@ -29,6 +29,16 @@ class ViajeModel
         return $viajes;
     }
 
+    //----------------------------Funcion ordenar(Ok) --------------------//
+    public function orderViaje($order)
+    {
+        $query = $this->db->prepare("SELECT * FROM viajes ORDER BY salida $order");
+        $query->execute();
+        $viajes = $query->fetchAll(PDO::FETCH_OBJ);
+        var_dump($viajes);
+        return $viajes;
+    }
+
     //----------------------------Funcion insert (Ok) --------------------//
 
     public function insert($salida, $destino, $dia, $horario, $lugares, $mascota, $precio, $datos, $id_automovil)

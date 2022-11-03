@@ -11,3 +11,8 @@ Para obtener todos los viajes: http://localhost/refactor-rest/api/viajes
 Para obtener un viaje por id: http://localhost/refactor-rest/api/viajes/id
 Para obtener todos los automóviles: http://localhost/refactor-rest/api/automoviles
 Para obtener un automovil por id: http://localhost/refactor-rest/api/automovil/id
+Para obtener viajes ordenados por salida ascendentes: http://localhost/refactor-rest/api/viajes?asc
+Para obtener viajes ordenados por salida descendente: http://localhost/refactor-rest/api/viajes?desc
+Para obtener viajes ordenados por salida ascendentes: http://localhost/refactor-rest/api/automoviles?asc
+Para obtener viajes ordenados por salida descendente: http://localhost/refactor-rest/api/automoviles?desc
+

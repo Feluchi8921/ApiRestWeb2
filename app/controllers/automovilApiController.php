@@ -21,10 +21,29 @@ class automovilApiController {
         return json_decode($this->data);
     }
 
-    //----------------------------Funcion getAll (Ok)--------------------//
-    public function getAutomoviles($params = null) {
-        $automoviles = $this->model->getAll();
-        $this->view->response($automoviles);
+    //----------------------------Funcion getAll con ordenar(Ok)--------------------//
+    public function getAutomoviles() {
+        //si le paso ordenar
+        //agregar si ordenar=desc entonces llama a la funcion ordenar descen sino llama asc
+        $order=$_GET['order'];
+        //var_dump($order);
+        if(!empty($order==='asc')){
+            $order=ucfirst($order); //paso el parametro a mayuscula para poder usarlo en MySQL
+            $automoviles = $this->model->orderAutomovil($order);
+            $this->view->response($automoviles);
+        }
+        if (!empty($order==='desc')){
+            $order=ucfirst($order);
+            $viajes = $this->model->orderAutomovil($order);
+            $this->view->response($viajes);
+        }
+        
+        //sino devuelve todo desordenado
+        else{
+            $viajes = $this->model->getAll();
+            $this->view->response($viajes);
+        }
+        
     }
 
     //----------------------------Funcion get (Ok)--------------------//
