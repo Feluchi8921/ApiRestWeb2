@@ -22,6 +22,18 @@ class ViajeApiController {
 
     //----------------------------Funcion getAll con ordenar(Ok)--------------------//
     public function getViajes() {
+        //paginacion
+        $sizePages=3;
+        if(isset ($_GET¨['pagina'])==){
+            header("Location: viajes");
+        }
+        else{
+            $page=1;
+        }
+        $start_where=($page-1)*$sizePages;
+        $viajes=$this->model->getAll($start_where,$sizePages);
+        $this->view->responde($viajes, 200);
+        
         //si le paso ordenar
         //agregar si ordenar=desc entonces llama a la funcion ordenar descen sino llama asc
         $order=$_GET['order'];

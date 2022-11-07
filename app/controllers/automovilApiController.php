@@ -23,6 +23,17 @@ class automovilApiController {
 
     //----------------------------Funcion getAll con ordenar(Ok)--------------------//
     public function getAutomoviles() {
+        //paginacion
+        $sizePages=3;
+        if(isset ($_GET¨['pagina'])==){
+            header("Location: automoviles");
+        }
+        else{
+            $page=1;
+        }
+        $start_where=($page-1)*$sizePages;
+        $automoviles=$this->model->getAll($start_where,$sizePages);
+        $this->view->responde($automoviles, 200);
         //si le paso ordenar
         //agregar si ordenar=desc entonces llama a la funcion ordenar descen sino llama asc
         $order=$_GET['order'];
