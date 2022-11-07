@@ -24,7 +24,7 @@ class ViajeApiController {
     public function getViajes() {
         //paginacion
         $sizePages=3;
-        if(isset ($_GET¨['pagina'])==){
+        if(isset ($_GET¨['pagina'])==1){
             header("Location: viajes");
         }
         else{
@@ -32,7 +32,7 @@ class ViajeApiController {
         }
         $start_where=($page-1)*$sizePages;
         $viajes=$this->model->getAll($start_where,$sizePages);
-        $this->view->responde($viajes, 200);
+        $this->view->response($viajes, 200);
         
         //si le paso ordenar
         //agregar si ordenar=desc entonces llama a la funcion ordenar descen sino llama asc
@@ -75,6 +75,12 @@ class ViajeApiController {
     //----------------------------Funcion delete (Ok)--------------------//
 
     public function deleteViaje($params = null) {
+        //borra solo usuario logueado
+        if(!$this->authHelper->isLoggedIn()){
+            $this->view->response("No estas logeado", 401);
+            return;
+        }
+
         $id = $params[':ID'];
 
         $viaje = $this->model->get($id);
@@ -89,6 +95,12 @@ class ViajeApiController {
     //----------------------------Funcion insert (Ok)--------------------//
     
     public function insertViaje($params = null) {
+        //borra solo usuario logueado
+        if(!$this->authHelper->isLoggedIn()){
+            $this->view->response("No estas logeado", 401);
+            return;
+        }
+
         $viaje = $this->getData();
         if (empty($viaje->salida) || empty($viaje->destino) || empty($viaje->dia) || empty($viaje->horario) ||
          empty($viaje->lugares) || empty($viaje->mascota) || empty($viaje->precio) || empty($viaje->datos) || empty($viaje->id_automovil)) {

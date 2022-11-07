@@ -5,13 +5,13 @@ require_once './app/views/apiView.php';
 class automovilApiController {
     private $model;
     private $view;
-
+    private $authHelper;
     private $data;
 
     public function __construct() {
         $this->model = new AutomovilModel();
         $this->view = new ApiView();
-        
+        $this->authHelper = new AuthApiHelper();
         // lee el body del request
         $this->data = file_get_contents("php://input");
     }
@@ -25,7 +25,7 @@ class automovilApiController {
     public function getAutomoviles() {
         //paginacion
         $sizePages=3;
-        if(isset ($_GET¨['pagina'])==){
+        if(isset ($_GET¨['pagina'])==1){
             header("Location: automoviles");
         }
         else{
@@ -33,7 +33,7 @@ class automovilApiController {
         }
         $start_where=($page-1)*$sizePages;
         $automoviles=$this->model->getAll($start_where,$sizePages);
-        $this->view->responde($automoviles, 200);
+        $this->view->response($automoviles, 200);
         //si le paso ordenar
         //agregar si ordenar=desc entonces llama a la funcion ordenar descen sino llama asc
         $order=$_GET['order'];
@@ -74,6 +74,12 @@ class automovilApiController {
 
     //----------------------------Funcion delete (Ok)--------------------//
     public function deleteAutomovil($params = null) {
+        //borra solo usuario logueado
+        if(!$this->authHelper->isLoggedIn()){
+            $this->view->response("No estas logeado", 401);
+            return;
+        }
+
         $id = $params[':ID'];
 
         $automovil = $this->model->get($id);
@@ -88,6 +94,12 @@ class automovilApiController {
 
     //----------------------------Funcion insert (Ok)--------------------//  
     public function insertAutomovil($params = null) {
+        //borra solo usuario logueado
+        if(!$this->authHelper->isLoggedIn()){
+            $this->view->response("No estas logeado", 401);
+            return;
+        }
+        
         $automovil = $this->getData();
         if (empty($automovil->salida) || empty($automovil->destino) || empty($automovil->dia) || empty($automovil->horario) ||
          empty($automovil->lugares) || empty($automovil->mascota) || empty($automovil->precio) || empty($automovil->datos) || empty($automovil->id_automovil)) {
