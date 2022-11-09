@@ -2,10 +2,10 @@
 Una API REST sencilla para manejar un CRUD de tareas
 
 ## Importar la base de datos
-- importar desde PHPMyAdmin (o cualquiera) database/db_viajes.php
+- importar base de datos database/db_viajes.php
 
 
-## Pueba con postman
+## Prueba con postman
 Los endpoint de la API es: 
 Para obtener todos los viajes: http://localhost/apiRest/api/viajes
 Para obtener un viaje por id: http://localhost/apiRest/api/viajes/id
@@ -15,4 +15,4 @@ Para obtener viajes ordenados por salida ascendentes: http://localhost/apiRest/a
 Para obtener viajes ordenados por salida descendente: http://localhost/apiRest/api/viajes?desc
 Para obtener viajes ordenados por salida ascendentes: http://localhost/apiRest/api/automoviles?asc
 Para obtener viajes ordenados por salida descendente: http://localhost/apiRest/api/automoviles?desc
-Para obtener token: http://localhost/apiRest/api/auth/token
+Para obtener token: http://localhost/apiRest/api/viajes/auth/token

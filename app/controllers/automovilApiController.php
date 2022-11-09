@@ -1,6 +1,7 @@
 <?php
 require_once './app/models/automovilModel.php';
 require_once './app/views/apiView.php';
+require_once './app/helpers/authApiHelper.php';
 
 class automovilApiController {
     private $model;
@@ -111,7 +112,7 @@ class automovilApiController {
     public function deleteAutomovil($params = null) {
         //borra solo usuario logueado
         if(!$this->authHelper->isLoggedIn()){
-            $this->view->response("No estas logeado", 401);
+            $this->view->response("No estas logueado", 401);
             return;
         }
 
@@ -131,7 +132,7 @@ class automovilApiController {
     public function insertAutomovil($params = null) {
         //borra solo usuario logueado
         if(!$this->authHelper->isLoggedIn()){
-            $this->view->response("No estas logeado", 401);
+            $this->view->response("No estas logueado", 401);
             return;
         }
         

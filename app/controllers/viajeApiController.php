@@ -1,17 +1,18 @@
 <?php
 require_once './app/models/viajeModel.php';
 require_once './app/views/apiView.php';
+require_once './app/helpers/authApiHelper.php';
 
 class ViajeApiController {
     private $model;
     private $view;
-
+    private $authHelper;
     private $data;
 
     public function __construct() {
         $this->model = new ViajeModel();
         $this->view = new ApiView();
-        
+        $this->authHelper = new AuthApiHelper();
         // lee el body del request
         $this->data = file_get_contents("php://input");
     }
@@ -86,10 +87,7 @@ class ViajeApiController {
                 }
         }  
     } 
-    }
-        
-        
-       
+    }       
 
     //----------------------------Funcion get (Ok)--------------------//
     public function getViaje($params = null) {
@@ -111,19 +109,19 @@ class ViajeApiController {
     public function deleteViaje($params = null) {
         //borra solo usuario logueado
         if(!$this->authHelper->isLoggedIn()){
-            $this->view->response("No estas logeado", 401);
+            $this->view->response("No estas logueado", 401);
             return;
         }
 
-        $id = $params[':ID'];
-
-        $viaje = $this->model->get($id);
-        if ($viaje) {
-            $this->model->delete($id);
+        $id_viaje = $params[':ID'];
+        var_dump($id_viaje);
+        $viaje = $this->model->get($id_viaje);
+        if (!empty($viaje)) {
+            $this->model->delete($id_viaje);
             $this->view->response($viaje);
         } 
         else {
-            $this->view->response("El viaje con el id=$id no existe", 404);
+            $this->view->response("El viaje con el id=$id_viaje no existe", 404);
     }
     }
     //----------------------------Funcion insert (Ok)--------------------//
@@ -131,7 +129,7 @@ class ViajeApiController {
     public function insertViaje($params = null) {
         //borra solo usuario logueado
         if(!$this->authHelper->isLoggedIn()){
-            $this->view->response("No estas logeado", 401);
+            $this->view->response("No estas logueado", 401);
             return;
         }
 

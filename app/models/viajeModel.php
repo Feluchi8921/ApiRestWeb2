@@ -35,8 +35,8 @@ var_dump($viajes);
     {
         $query = $this->db->prepare("SELECT * FROM viajes WHERE id_viaje=$id_viaje");
         $query->execute();
-        $viajes = $query->fetchAll(PDO::FETCH_OBJ);
-        return $viajes;
+        $viaje = $query->fetchAll(PDO::FETCH_OBJ);
+        return $viaje;
     }
 
     //----------------------------Funcion ordenar(Ok) --------------------//
