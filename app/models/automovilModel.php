@@ -26,6 +26,16 @@ class AutomovilModel
 
         return $automoviles;
     }
+    //----------------------------Funcion getAllPaginated (Ok) --------------------//
+
+    public function getAllPaginated($limit, $offset)
+    {
+        $query = $this->db->prepare("SELECT SQL_CALC_FOUND_ROWS * FROM automoviles LIMIT $limit OFFSET $offset ");
+        $query->execute();
+        $automoviles = $query->fetchAll(PDO::FETCH_OBJ);
+
+        return $automoviles;
+    }
     //----------------------------Funcion ordenar(Ok) --------------------//
     public function orderAutomovil($order)
     {
@@ -73,4 +83,13 @@ class AutomovilModel
         $query = $this->db->prepare("DELETE FROM automoviles WHERE id_automovil=?");
         $query->execute(array($id_automovil));
     }
+    //----------------------------Funcion filtro (ok)--------------------//
+    public function getFilterAutomovil($patente){
+
+        $query = $this->db->prepare("SELECT * FROM `automoviles` WHERE patente=?");
+        $query->execute(array($patente));
+        $viajes = $query->fetchAll(PDO::FETCH_OBJ);
+        return $viajes;
+    }
 }
+

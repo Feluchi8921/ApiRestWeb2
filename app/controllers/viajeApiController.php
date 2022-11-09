@@ -54,17 +54,17 @@ class ViajeApiController {
                 }
                     break;
                 case 'page':
-                    if(!empty($_GET['page'])){
-                    $page=$_GET['page'];
+                    if(!empty($key)){
+                    $page=$key;
                     $limit=4;
                     $offset=((int)$page-1)*$limit;
                     $viajes = $this->model->getAllPaginated($limit, $offset); 
                     $this->view->response($viajes, 200);
-                }
-                else{
-                    $viajes = $this->model->getAll();
-                    $this->view->response($viajes);
-                }
+                    }
+                    else{
+                        $viajes = $this->model->getAll();
+                        $this->view->response($viajes);
+                    }
                     break;
                 case 'salida':
                     //filtro por salida

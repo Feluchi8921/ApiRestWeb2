@@ -23,30 +23,74 @@ class automovilApiController {
 
     //----------------------------Funcion getAll con ordenar(Ok)--------------------//
     public function getAutomoviles() {
-        //paginacion
-        
-        //si le paso ordenar
-        //agregar si ordenar=desc entonces llama a la funcion ordenar descen sino llama asc
-        $order=$_GET['order'];
-        //var_dump($order);
-        if(!empty($order==='asc')){
-            $order=ucfirst($order); //paso el parametro a mayuscula para poder usarlo en MySQL
-            $automoviles = $this->model->orderAutomovil($order);
+        $params=$_GET;
+        var_dump($params);
+        var_dump(count($params));
+        if((count($params)=='1')&&(empty($param))){
+            $automoviles = $this->model->getAll();
             $this->view->response($automoviles);
         }
-        if (!empty($order==='desc')){
-            $order=ucfirst($order);
-            $viajes = $this->model->orderAutomovil($order);
-            $this->view->response($viajes);
-        }
-        
-        //sino devuelve todo desordenado
         else{
-            $viajes = $this->model->getAll();
-            $this->view->response($viajes);
-        }
-        
+        foreach($params as $param =>$key){
+            
+            //echo"$param  -> $key----- ";
+            switch ($param) {
+                case 'order':
+                if(!empty($key==='asc')){
+                    $order=ucfirst($key); //paso el parametro a mayuscula para poder usarlo en MySQL
+                    $automoviles = $this->model->orderAutomovil($order);
+                    $this->view->response($automoviles);
+                }
+                else if (!empty($key==='desc')){
+                    $order=ucfirst($key);
+                    $automoviles = $this->model->orderAutomovil($order);
+                    $this->view->response($automoviles);
+                }
+                else{
+                    //sino devuelve todo desordenado
+                    if(empty($key)){
+                    $automoviles = $this->model->getAll();
+                    $this->view->response($automoviles);
+                    }
+                }
+                    break;
+                case 'page':
+                    if(!empty($key)){
+                    $page=$key;
+                    $limit=4;
+                    $offset=((int)$page-1)*$limit;
+                    $automoviles = $this->model->getAllPaginated($limit, $offset); 
+                    $this->view->response($automoviles, 200);
+                    }
+                    else{
+                        $automoviles = $this->model->getAll();
+                        $this->view->response($automoviles);
+                    }
+                    break;
+                case 'patente':
+                    //filtro por salida
+                    if(!empty($key)){
+                    $automoviles = $this->model->getFilterAutomovil($key); //tomo los datos ingresados
+                    $this->view->response($automoviles);
+                    }
+                    else{
+                        echo"no existe ningun viaje con la salida ingresada";
+                    }
+                    break;
+                default:
+                //siempre muestra el default
+                    if(empty($key)){
+                    $automoviles = $this->model->getAll();
+                    $this->view->response($automoviles); 
+                    }
+                    break;
+                }
+        }  
+    } 
     }
+        
+        
+       
 
     //----------------------------Funcion get (Ok)--------------------//
     public function getAutomovil($params = null) {
