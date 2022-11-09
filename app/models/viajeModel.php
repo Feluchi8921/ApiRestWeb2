@@ -10,16 +10,26 @@ class ViajeModel
         $this->db = new PDO('mysql:host=localhost;' . 'dbname=db_viajes;charset=utf8', 'root', '');
     }
 
-    //----------------------------Funcion getAll (Ok) --------------------//
-
+    //----------------------------Funcion getAll(Ok) --------------------//
     public function getAll()
     {
         $query = $this->db->prepare("SELECT * FROM viajes");
         $query->execute();
         $viajes = $query->fetchAll(PDO::FETCH_OBJ);
+var_dump($viajes);
+        return $viajes;
+    }
+    //----------------------------Funcion getAllPaginated (Ok) --------------------//
+
+    public function getAllPAginated($limit, $offset)
+    {
+        $query = $this->db->prepare("SELECT SQL_CALC_FOUND_ROWS * FROM viajes LIMIT $limit OFFSET $offset ");
+        $query->execute();
+        $viajes = $query->fetchAll(PDO::FETCH_OBJ);
 
         return $viajes;
     }
+    
     //----------------------------Function get (Ok) --------------------//
     public function get($id_viaje)
     {
@@ -64,4 +74,12 @@ class ViajeModel
         $query =  $this->db->prepare("UPDATE viajes SET salida=?, destino=?, dia=?, horario=?, lugares=?, mascota=?, precio=?, datos=? WHERE id_viaje=?");
         $query->execute(array($salida, $destino, $dia, $horario, $lugares, $mascota, $precio, $datos, $id_viaje));
     }
-}
+    //----------------------------Funcion filtroViaje (Ok)--------------------//
+    public function getFilterViaje($salida){
+
+            $query = $this->db->prepare("SELECT * FROM `viajes` WHERE salida=?");
+            $query->execute(array($salida));
+            $viajes = $query->fetchAll(PDO::FETCH_OBJ);
+            return $viajes;
+        }
+    }

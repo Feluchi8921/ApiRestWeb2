@@ -24,16 +24,7 @@ class automovilApiController {
     //----------------------------Funcion getAll con ordenar(Ok)--------------------//
     public function getAutomoviles() {
         //paginacion
-        $sizePages=3;
-        if(isset ($_GET¨['pagina'])==1){
-            header("Location: automoviles");
-        }
-        else{
-            $page=1;
-        }
-        $start_where=($page-1)*$sizePages;
-        $automoviles=$this->model->getAll($start_where,$sizePages);
-        $this->view->response($automoviles, 200);
+        
         //si le paso ordenar
         //agregar si ordenar=desc entonces llama a la funcion ordenar descen sino llama asc
         $order=$_GET['order'];
@@ -109,6 +100,6 @@ class automovilApiController {
             $id = $this->model->insert($automovil->salida, $automovil->destino, $automovil->dia, $automovil->horario, $automovil->lugares, $automovil->mascota, $automovil->precio, $automovil->datos, $automovil->id_automovil);
             $this->view->response("El automovil se insertó con éxito con el id=$id", 201);
         }
-    }
+    }  
 
 }

@@ -22,40 +22,74 @@ class ViajeApiController {
 
     //----------------------------Funcion getAll con ordenar(Ok)--------------------//
     public function getViajes() {
-        //paginacion
-        $sizePages=3;
-        if(isset ($_GET¨['pagina'])==1){
-            header("Location: viajes");
-        }
-        else{
-            $page=1;
-        }
-        $start_where=($page-1)*$sizePages;
-        $viajes=$this->model->getAll($start_where,$sizePages);
-        $this->view->response($viajes, 200);
-        
-        //si le paso ordenar
-        //agregar si ordenar=desc entonces llama a la funcion ordenar descen sino llama asc
-        $order=$_GET['order'];
-        //var_dump($order);
-        if(!empty($order==='asc')){
-            $order=ucfirst($order); //paso el parametro a mayuscula para poder usarlo en MySQL
-            $viajes = $this->model->orderViaje($order);
-            $this->view->response($viajes);
-        }
-        if (!empty($order==='desc')){
-            $order=ucfirst($order);
-            $viajes = $this->model->orderViaje($order);
-            $this->view->response($viajes);
-        }
-        
-        //sino devuelve todo desordenado
-        else{
+        $params=$_GET;
+        var_dump($params);
+        var_dump(count($params));
+        if((count($params)=='1')&&(empty($param))){
             $viajes = $this->model->getAll();
             $this->view->response($viajes);
         }
-        
+        else{
+        foreach($params as $param =>$key){
+            
+            //echo"$param  -> $key----- ";
+            switch ($param) {
+                case 'order':
+                if(!empty($key==='asc')){
+                    $order=ucfirst($key); //paso el parametro a mayuscula para poder usarlo en MySQL
+                    $viajes = $this->model->orderViaje($order);
+                    $this->view->response($viajes);
+                }
+                else if (!empty($key==='desc')){
+                    $order=ucfirst($key);
+                    $viajes = $this->model->orderViaje($order);
+                    $this->view->response($viajes);
+                }
+                else{
+                    //sino devuelve todo desordenado
+                    if(empty($key)){
+                    $viajes = $this->model->getAll();
+                    $this->view->response($viajes);
+                    }
+                }
+                    break;
+                case 'page':
+                    if(!empty($_GET['page'])){
+                    $page=$_GET['page'];
+                    $limit=4;
+                    $offset=((int)$page-1)*$limit;
+                    $viajes = $this->model->getAllPaginated($limit, $offset); 
+                    $this->view->response($viajes, 200);
+                }
+                else{
+                    $viajes = $this->model->getAll();
+                    $this->view->response($viajes);
+                }
+                    break;
+                case 'salida':
+                    //filtro por salida
+                    if(!empty($key)){
+                    $viajes = $this->model->getFilterViaje($key); //tomo los datos ingresados
+                    $this->view->response($viajes);
+                    }
+                    else{
+                        echo"no existe ningun viaje con la salida ingresada";
+                    }
+                    break;
+                default:
+                //siempre muestra el default
+                    if(empty($key)){
+                    $viajes = $this->model->getAll();
+                    $this->view->response($viajes); 
+                    }
+                    break;
+                }
+        }  
+    } 
     }
+        
+        
+       
 
     //----------------------------Funcion get (Ok)--------------------//
     public function getViaje($params = null) {
@@ -111,6 +145,16 @@ class ViajeApiController {
             $this->view->response("El viaje se insertó con éxito con el id=$id", 201);
         }
     }
-    
+
+    //----------------------------Funcion filtroViaje (Ok)--------------------//
+    public function filterSearchViaje()
+    {
+        $salida=$_GET['salida'];
+        $destino=$_GET['salida'];
+        $dia=$_GET['salida'];
+        var_dump($salida, $destino, $dia);
+        $viajes = $this->model->getFilterViaje($salida, $destino, $dia); //tomo los datos ingresados
+        $this->view->response($viajes);
+    }
 
 }
