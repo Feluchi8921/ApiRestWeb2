@@ -16,7 +16,7 @@ $router->addRoute('automoviles', 'GET', 'automovilApiController', 'getAutomovile
 $router->addRoute('automoviles/:ID', 'GET', 'automovilApiController', 'getAutomovil');
 $router->addRoute('automoviles/:ID', 'DELETE', 'automovilApiController', 'deleteAutomovil');
 $router->addRoute('automoviles', 'POST', 'automovilApiController', 'insertAutomovil'); 
-$router->addRoute("auth/token", 'GET', 'AuthApiController', 'getToken');
+$router->addRoute("auth/token", 'GET', 'authApiController', 'getToken');
 
 // ejecuta la ruta (sea cual sea)
 $router->route($_GET["resource"], $_SERVER['REQUEST_METHOD']);

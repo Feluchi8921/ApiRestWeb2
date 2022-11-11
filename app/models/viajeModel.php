@@ -11,14 +11,43 @@ class ViajeModel
     }
 
     //----------------------------Funcion getAll(Ok) --------------------//
-    public function getAll()
-    {
-        $query = $this->db->prepare("SELECT * FROM viajes");
-        $query->execute();
-        $viajes = $query->fetchAll(PDO::FETCH_OBJ);
-var_dump($viajes);
-        return $viajes;
-    }
+    public function getAll($order, $limit, $page, $column, $filtervalue){
+            $params = []; //creo el array
+
+            //armo mi primer sentencia, básica
+            $query_sentence = "SELECT * FROM viajes ";
+            
+            if($column != null){
+                //filtro 
+                $query_sentence .= " WHERE  $column = ?";
+                //Al arreglo params agregale la variable
+                array_push($params, $filtervalue);
+            }
+
+            if($order != null){
+                $query_sentence .= "ORDER BY $order";
+                array_push($params, $order);
+               
+            }
+        
+            if($page == null){
+                $page=0;
+            }
+
+            if($limit != null){
+                $offset = ($page * $limit) - $limit;
+                $query_sentence .= " LIMIT  $limit OFFSET $offset";
+            }
+
+
+
+            //var_dump($query_sentence);
+            $query = $this->db->prepare($query_sentence);
+            $query->execute($params);
+            $exps = $query->fetchAll(PDO::FETCH_OBJ); 
+            return $exps;
+        }
+    
     //----------------------------Funcion getAllPaginated (Ok) --------------------//
 
     public function getAllPAginated($limit, $offset)
