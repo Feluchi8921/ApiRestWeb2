@@ -11,38 +11,39 @@ class AutomovilModel
     }
 
 
-    //----------------------------Funcion gelAll (ok)--------------------//
-    public function getAll()
-    {
-        // 1. abro conexión a la DB
-        // ya esta abierta por el constructor de la clase
+     //----------------------------Funcion getAll(Ok) --------------------//
+     public function getAll($orderBy, $order, $limit, $page, $column, $filtervalue){
+       
+        $params = []; 
+        
+        $query_sentence = "SELECT * FROM automoviles";
+        
+        if($column != null){
+            $query_sentence .= " WHERE  $column = ?";
+            array_push($params, $filtervalue);
+        }
 
-        // 2. ejecuto la sentencia (2 subpasos)
-        $query = $this->db->prepare("SELECT * FROM automoviles");
-        $query->execute();
+        if($orderBy != null){
+            $query_sentence .= " ORDER BY $orderBy";
+            
+        }
+        if($order != null){
+            $query_sentence .= " $order";
+           
+        }
+       
+        if($page == null){
+            $page=1;
+        }
 
-        // 3. obtengo los resultados
-        $automoviles = $query->fetchAll(PDO::FETCH_OBJ); // devuelve un arreglo de objetos
+        if(($page != null)&&($limit != null)){
+            $offset=($page-1)*$limit;
+            $query_sentence .= " LIMIT  $limit OFFSET $offset";
+        }
 
-        return $automoviles;
-    }
-    //----------------------------Funcion getAllPaginated (Ok) --------------------//
-
-    public function getAllPaginated($limit, $offset)
-    {
-        $query = $this->db->prepare("SELECT SQL_CALC_FOUND_ROWS * FROM automoviles LIMIT $limit OFFSET $offset ");
-        $query->execute();
-        $automoviles = $query->fetchAll(PDO::FETCH_OBJ);
-
-        return $automoviles;
-    }
-    //----------------------------Funcion ordenar(Ok) --------------------//
-    public function orderAutomovil($order)
-    {
-        $query = $this->db->prepare("SELECT * FROM automoviles ORDER BY marca $order");
-        $query->execute();
-        $automoviles = $query->fetchAll(PDO::FETCH_OBJ);
-        var_dump($automoviles);
+        $query = $this->db->prepare($query_sentence);
+        $query->execute($params);
+        $automoviles = $query->fetchAll(PDO::FETCH_OBJ); 
         return $automoviles;
     }
 
@@ -83,13 +84,6 @@ class AutomovilModel
         $query = $this->db->prepare("DELETE FROM automoviles WHERE id_automovil=?");
         $query->execute(array($id_automovil));
     }
-    //----------------------------Funcion filtro (ok)--------------------//
-    public function getFilterAutomovil($patente){
-
-        $query = $this->db->prepare("SELECT * FROM `automoviles` WHERE patente=?");
-        $query->execute(array($patente));
-        $viajes = $query->fetchAll(PDO::FETCH_OBJ);
-        return $viajes;
-    }
+    
 }
 

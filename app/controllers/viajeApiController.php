@@ -21,14 +21,13 @@ class ViajeApiController {
         return json_decode($this->data);
     }
 
-    //----------------------------Funcion getAll con ordenar(Ok)--------------------//
+    //----------------------------Funcion getAll con filtrar, ordenar y paginar (Ok)--------------------//
     public function getViajes() {
             $orderBy = $_GET["orderBy"] ?? null;
             $order = $_GET["order"] ?? null;
             $limit = $_GET["limit"] ?? null;
             $page =  $_GET["page"] ?? null;
-            var_dump($_GET);
-            $column =  $_GET["column"] ?? null;  // ?column=nombre&filterval=nico  ?nombre=nico
+            $column =  $_GET["column"] ?? null; 
             $filtervalue = $_GET["filtervalue"] ?? null;
             $columns = [
                 "id_viaje" => "id_viaje",
@@ -111,15 +110,5 @@ class ViajeApiController {
         }
     }
 
-    //----------------------------Funcion filtroViaje (Ok)--------------------//
-    //public function filterSearchViaje()
-    //{
-        //$salida=$_GET['salida'];
-        //$destino=$_GET['salida'];
-        //$dia=$_GET['salida'];
-        //var_dump($salida, $destino, $dia);
-        //$viajes = $this->model->getFilterViaje($salida, $destino, $dia); //tomo los datos ingresados
-        //$this->view->response($viajes);
-    //}
 
 }

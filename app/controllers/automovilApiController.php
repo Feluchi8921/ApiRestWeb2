@@ -22,76 +22,36 @@ class automovilApiController {
         return json_decode($this->data);
     }
 
-    //----------------------------Funcion getAll con ordenar(Ok)--------------------//
+    //----------------------------Funcion getAll con filtrar, ordenar y paginar (Ok)--------------------//
     public function getAutomoviles() {
-        $params=$_GET;
-        var_dump($params);
-        var_dump(count($params));
-        if((count($params)=='1')&&(empty($param))){
-            $automoviles = $this->model->getAll();
-            $this->view->response($automoviles);
+        $orderBy = $_GET["orderBy"] ?? null;
+        $order = $_GET["order"] ?? null;
+        $limit = $_GET["limit"] ?? null;
+        $page =  $_GET["page"] ?? null;
+        $column =  $_GET["column"] ?? null; 
+        $filtervalue = $_GET["filtervalue"] ?? null;
+        $columns = [
+            "id_automovil" => "id_automovil",
+            "marca" => "marca",
+            "modelo" => "modelo",
+            "anio" => "anio",
+            "color" => "color",
+            "patente" => "patente",
+            "licencia" => "licencia",
+        ];
+        foreach ($_GET as $key => $value) {
+            if(in_array(strtolower($key), $columns)){
+                $column = $columns[strtolower ($key)];
+                $filtervalue = $value;
+            }
         }
-        else{
-        foreach($params as $param =>$key){
-            
-            //echo"$param  -> $key----- ";
-            switch ($param) {
-                case 'order':
-                if(!empty($key==='asc')){
-                    $order=ucfirst($key); //paso el parametro a mayuscula para poder usarlo en MySQL
-                    $automoviles = $this->model->orderAutomovil($order);
-                    $this->view->response($automoviles);
-                }
-                else if (!empty($key==='desc')){
-                    $order=ucfirst($key);
-                    $automoviles = $this->model->orderAutomovil($order);
-                    $this->view->response($automoviles);
-                }
-                else{
-                    //sino devuelve todo desordenado
-                    if(empty($key)){
-                    $automoviles = $this->model->getAll();
-                    $this->view->response($automoviles);
-                    }
-                }
-                    break;
-                case 'page':
-                    if(!empty($key)){
-                    $page=$key;
-                    $limit=4;
-                    $offset=((int)$page-1)*$limit;
-                    $automoviles = $this->model->getAllPaginated($limit, $offset); 
-                    $this->view->response($automoviles, 200);
-                    }
-                    else{
-                        $automoviles = $this->model->getAll();
-                        $this->view->response($automoviles);
-                    }
-                    break;
-                case 'patente':
-                    //filtro por salida
-                    if(!empty($key)){
-                    $automoviles = $this->model->getFilterAutomovil($key); //tomo los datos ingresados
-                    $this->view->response($automoviles);
-                    }
-                    else{
-                        echo"no existe ningun viaje con la salida ingresada";
-                    }
-                    break;
-                default:
-                //siempre muestra el default
-                    if(empty($key)){
-                    $automoviles = $this->model->getAll();
-                    $this->view->response($automoviles); 
-                    }
-                    break;
-                }
-        }  
-    } 
-    }
-        
-        
-       
+        $automoviles = $this->model->getAll($orderBy, $order, $limit, $page, $column, $filtervalue);
+
+    if($automoviles)
+        return $this->view->response($automoviles, 200);
+    else
+        $this->view->response("El automovil ingresado no existe", 404);
+ } 
 
     //----------------------------Funcion get (Ok)--------------------//
     public function getAutomovil($params = null) {
