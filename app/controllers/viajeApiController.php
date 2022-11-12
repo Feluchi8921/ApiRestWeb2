@@ -23,10 +23,11 @@ class ViajeApiController {
 
     //----------------------------Funcion getAll con ordenar(Ok)--------------------//
     public function getViajes() {
-        
+            $orderBy = $_GET["orderBy"] ?? null;
             $order = $_GET["order"] ?? null;
             $limit = $_GET["limit"] ?? null;
             $page =  $_GET["page"] ?? null;
+            var_dump($_GET);
             $column =  $_GET["column"] ?? null;  // ?column=nombre&filterval=nico  ?nombre=nico
             $filtervalue = $_GET["filtervalue"] ?? null;
             $columns = [
@@ -47,7 +48,7 @@ class ViajeApiController {
                     $filtervalue = $value;
                 }
             }
-            $viajes = $this->model->getAll($order, $limit, $page, $column, $filtervalue);
+            $viajes = $this->model->getAll($orderBy, $order, $limit, $page, $column, $filtervalue);
 
         if($viajes)
             return $this->view->response($viajes, 200);
@@ -111,14 +112,14 @@ class ViajeApiController {
     }
 
     //----------------------------Funcion filtroViaje (Ok)--------------------//
-    public function filterSearchViaje()
-    {
-        $salida=$_GET['salida'];
-        $destino=$_GET['salida'];
-        $dia=$_GET['salida'];
-        var_dump($salida, $destino, $dia);
-        $viajes = $this->model->getFilterViaje($salida, $destino, $dia); //tomo los datos ingresados
-        $this->view->response($viajes);
-    }
+    //public function filterSearchViaje()
+    //{
+        //$salida=$_GET['salida'];
+        //$destino=$_GET['salida'];
+        //$dia=$_GET['salida'];
+        //var_dump($salida, $destino, $dia);
+        //$viajes = $this->model->getFilterViaje($salida, $destino, $dia); //tomo los datos ingresados
+        //$this->view->response($viajes);
+    //}
 
 }
