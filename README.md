@@ -1,5 +1,5 @@
-# API REST para el recurso de tareas
-Una API REST sencilla para manejar un CRUD de tareas
+# API REST para el recurso de viajes y automoviles
+Una API REST sencilla para manejar un CRUD de viajes y automoviles
 
 ## Importar la base de datos
 - importar base de datos database/db_viajes.php
