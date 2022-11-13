@@ -1,12 +1,12 @@
 <?php
 require_once './app/models/automovilModel.php';
 require_once './app/views/apiView.php';
-require_once './app/helpers/authApiHelper.php';
+//require_once './app/helpers/authApiHelper.php';
 
 class automovilApiController {
     private $model;
     private $view;
-    private $authHelper;
+    //private $authHelper;
     private $data;
 
     public function __construct() {
@@ -21,6 +21,7 @@ class automovilApiController {
     private function getData() {
         return json_decode($this->data);
     }
+
 
     //----------------------------Funcion getAll con filtrar, ordenar y paginar (Ok)--------------------//
     public function getAutomoviles() {
@@ -71,10 +72,10 @@ class automovilApiController {
     //----------------------------Funcion delete (Ok)--------------------//
     public function deleteAutomovil($params = null) {
         //borra solo usuario logueado
-        if(!$this->authHelper->isLoggedIn()){
-            $this->view->response("No estas logueado", 401);
-            return;
-        }
+        //if(!$this->authHelper->isLoggedIn()){
+           // $this->view->response("No estas logueado", 401);
+           // return;
+        //}
 
         $id = $params[':ID'];
 
@@ -91,20 +92,34 @@ class automovilApiController {
     //----------------------------Funcion insert (Ok)--------------------//  
     public function insertAutomovil($params = null) {
         //borra solo usuario logueado
-        if(!$this->authHelper->isLoggedIn()){
-            $this->view->response("No estas logueado", 401);
-            return;
-        }
+        //if(!$this->authHelper->isLoggedIn()){
+            //$this->view->response("No estas logueado", 401);
+            //return;
+        //}
         
         $automovil = $this->getData();
-        if (empty($automovil->salida) || empty($automovil->destino) || empty($automovil->dia) || empty($automovil->horario) ||
-         empty($automovil->lugares) || empty($automovil->mascota) || empty($automovil->precio) || empty($automovil->datos) || empty($automovil->id_automovil)) {
+        if (empty($automovil->marca) || empty($automovil->modelo) || empty($automovil->anio)|| empty($automovil->color)|| empty($automovil->patente)|| empty($automovil->licencia)) {
             $this->view->response("Complete los datos", 400);
-        } 
-        else {
-            $id = $this->model->insert($automovil->salida, $automovil->destino, $automovil->dia, $automovil->horario, $automovil->lugares, $automovil->mascota, $automovil->precio, $automovil->datos, $automovil->id_automovil);
-            $this->view->response("El automovil se insertó con éxito con el id=$id", 201);
+        } else {
+            $id_automovil = $this->model->insert($automovil->marca, $automovil->modelo, $automovil->anio, $automovil->color, $automovil->patente, $automovil->licencia);
+            $automovil = $this->model->get($id_automovil);
+            $this->view->response($automovil, 201);
         }
-    }  
 
+    }
+        //----------------------------Funcion edit (Ok)--------------------//
+        function editAutomovil($params = null) {
+            $id_automovil = $params[':ID'];
+            $automovil=$this->model->get($id_automovil);
+            
+            if ($automovil) {
+                $automovil = $this->getData();
+                $this->model->update($automovil->marca, $automovil->modelo, $automovil->anio, $automovil->color, $automovil->patente, $automovil->licencia, $id_automovil);
+                $viaje = $this->model->get($id_automovil);
+                $this->view->response("El automovil con el id=$id_automovil se actualizó correctamente", 200);
+
+            } else {
+                return $this->view->response("El automovil con el id=$id_automovil no existe", 404);
+            }
+        }
 }

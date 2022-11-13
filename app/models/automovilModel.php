@@ -61,8 +61,8 @@ class AutomovilModel
 
     public function insert($marca, $modelo, $anio, $color, $patente, $licencia)
     {
-        $query = $this->db->prepare("INSERT INTO automoviles(marca, modelo, anio, color, patente, licencia) VALUES(?,?,?,?,?,?)");
-        $query->execute(array($marca, $modelo, $anio, $color, $patente, $licencia));
+        $query = $this->db->prepare("INSERT INTO automoviles (marca, modelo, anio, color, patente, licencia) VALUES (?, ?, ?, ?, ?, ?)");
+        $query->execute([$marca, $modelo, $anio, $color, $patente, $licencia]);
 
         return $this->db->lastInsertId();
     }
@@ -76,6 +76,15 @@ class AutomovilModel
         $query = $this->db->prepare("UPDATE automoviles SET marca=?, modelo=?, anio=?, color=?, patente=?, licencia=? WHERE id_automovil=?");
         $query->execute(array($marca, $modelo, $anio, $color, $patente, $licencia, $id_automovil));
     }
+    
+
+    ///----------------------------Funcion edit (Ok) --------------------//
+    
+    function update($id_automovil, $marca, $modelo, $anio, $color, $patente, $licencia){
+        $sentencia = $this->db->prepare("UPDATE automoviles SET marca=?, modelo=?, anio=?, color=?, patente=?, licencia=?, id_automovil=? WHERE id_automovil=?");
+        $sentencia->execute(array($id_automovil, $marca, $modelo, $anio, $color, $patente, $licencia));
+    }
+
 
     //----------------------------Funcion delete (ok)--------------------//
 

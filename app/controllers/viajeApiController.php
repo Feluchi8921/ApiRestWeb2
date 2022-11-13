@@ -6,20 +6,24 @@ require_once './app/helpers/authApiHelper.php';
 class ViajeApiController {
     private $model;
     private $view;
-    private $authHelper;
+    //private $authHelper;
     private $data;
 
     public function __construct() {
         $this->model = new ViajeModel();
         $this->view = new ApiView();
         $this->authHelper = new AuthApiHelper();
+       
         // lee el body del request
         $this->data = file_get_contents("php://input");
+
     }
-    //----------------------------Funcion geData (Ok)--------------------//
+    //----------------------------Funcion getData (Ok)--------------------//
     private function getData() {
         return json_decode($this->data);
     }
+
+
 
     //----------------------------Funcion getAll con filtrar, ordenar y paginar (Ok)--------------------//
     public function getViajes() {
@@ -74,17 +78,17 @@ class ViajeApiController {
 
     public function deleteViaje($params = null) {
         //borra solo usuario logueado
-        if(!$this->authHelper->isLoggedIn()){
-            $this->view->response("No estas logueado", 401);
-            return;
-        }
+        //if(!$this->authHelper->isLoggedIn()){
+            //$this->view->response("No estas logueado", 401);
+            //return;
+        //}
 
         $id_viaje = $params[':ID'];
         var_dump($id_viaje);
         $viaje = $this->model->get($id_viaje);
         if (!empty($viaje)) {
             $this->model->delete($id_viaje);
-            $this->view->response($viaje);
+            $this->view->response("EL viaje "+$viaje+ "se eliminó correctamente");
         } 
         else {
             $this->view->response("El viaje con el id=$id_viaje no existe", 404);
@@ -93,22 +97,39 @@ class ViajeApiController {
     //----------------------------Funcion insert (Ok)--------------------//
     
     public function insertViaje($params = null) {
-        //borra solo usuario logueado
-        if(!$this->authHelper->isLoggedIn()){
-            $this->view->response("No estas logueado", 401);
-            return;
-        }
+        //inserta solo usuario logueado
+        //if(!$this->authHelper->isLoggedIn()){
+           // $this->view->response("No estas logueado", 401);
+            //return;
+        //}
 
         $viaje = $this->getData();
-        if (empty($viaje->salida) || empty($viaje->destino) || empty($viaje->dia) || empty($viaje->horario) ||
-         empty($viaje->lugares) || empty($viaje->mascota) || empty($viaje->precio) || empty($viaje->datos) || empty($viaje->id_automovil)) {
+        
+        if (empty($viaje->salida) || empty($viaje->destino) || empty($viaje->dia) || empty($viaje->horario) ||empty($viaje->lugares) || empty($viaje->mascota) || empty($viaje->precio) || empty($viaje->datos) || empty($viaje->id_automovil)) {
             $this->view->response("Complete los datos", 400);
         } 
         else {
-            $id = $this->model->insert($viaje->salida, $viaje->destino, $viaje->dia, $viaje->horario, $viaje->lugares, $viaje->mascota, $viaje->precio, $viaje->datos, $viaje->id_automovil);
-            $this->view->response("El viaje se insertó con éxito con el id=$id", 201);
+            $id_viaje = $this->model->insert($viaje->salida, $viaje->destino, $viaje->dia, $viaje->horario, $viaje->lugares, $viaje->mascota, $viaje->precio, $viaje->datos, $viaje->id_automovil);
+            $viaje=$this->model->get($id_viaje); 
+            $this->view->response("El viaje con el id=$id_viaje se insertó con éxito", 201);
         }
     }
+    //----------------------------Funcion edit (Ok)--------------------//
+    function editViaje($params = null) {
+        $id_viaje = $params[':ID'];
+        $viaje=$this->model->get($id_viaje);
+        
+        if ($viaje) {
+            $viaje = $this->getData();
+            $this->model->update($id_viaje, $viaje->salida, $viaje->destino, $viaje->dia, $viaje->horario, $viaje->lugares, $viaje->mascota, $viaje->precio, $viaje->datos, $viaje->id_automovil);
+            $viaje = $this->model->get($id_viaje);
+            $this->view->response("El viaje con el id=$id_viaje se actualizó correctamente", 200);
+
+        } else {
+            return $this->view->response("El viaje con el id=$id_viaje no existe", 404);
+        }
+    }
+
 
 
 }
