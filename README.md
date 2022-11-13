@@ -14,6 +14,14 @@ Los endpoint de la API es:
 ·Para obtener un viaje por id: http://localhost/apiRest/api/viajes/id
                             Ejemplo: http://localhost/apiRest/api/viajes/10
 
+·Para obtener un viaje por id: http://localhost/apiRest/api/viajes/id
+
+·Para insertar un viaje (método POST): http://localhost/apiRest/api/viajes?salida=Azul&destino=Tandil&dia=2022-12-17&horario=08:00&lugares=1&mascota=ninguna&precio=1800&datos=traer%mate&id_automovil=6
+
+·Para editar un viaje (método PUT): http://localhost/apiRest/api/viajes/12?salida=Tandil&destino=Balcarse&dia=12-12-2022&horario=11:00&lugares=3&mascota=perro&precio=1500&datos=ninguno&id_automovil=8
+
+·Para eliminar un viaje por id: http://localhost/apiRest/api/viajes/id/delete
+
 ·Para obtener todos los viajes paginados: http://localhost/apiRest/api/viajes?page=1&limit=3
 
 ·Para obtener todos los viajes paginados: http://localhost/apiRest/api/viajes?page=1&limit=2
@@ -36,7 +44,8 @@ Los endpoint de la API es:
                             Ejemplo: http://localhost/apiRest/api/viajes?orderBy=lugares&order=desc
 
 ·Para obtener una columna ordenada y paginada:
-                            Ejemplo: http://localhost/apiRest/api/viajes?page=1&limit=3
+                            Ejemplo: http://localhost/apiRest/api/viajes?orderBy=salida&order=asc&page=1&limit=3
+
 
                                 ------Automoviles------
 
@@ -44,6 +53,8 @@ Los endpoint de la API es:
 
 ·Para obtener un automovil por id: http://localhost/apiRest/api/autmovil/id
                             Ejemplo:http://localhost/apiRest/api/automoviles/7
+
+·Para insertar un automovil (método POST): http://localhost/apiRest/api/automovil?marca=Ford&modelo=F100&anio=1990&color=blanca&patente =BJI892&licencia=12856945
 
 ·Para obtener todos los automoviles paginados: http://localhost/apiRest/api/automoviles?page=1&limit=3
 
@@ -61,7 +72,7 @@ Los endpoint de la API es:
                             Ejemplo: http://localhost/apiRest/api/automoviles?orderBy=marca&order=desc
 
 ·Para obtener una columna ordenada y paginada:
-                            Ejemplo: http://localhost/apiRest/api/automoviles?page=2&limit=3
+                            Ejemplo: http://localhost/apiRest/api/automoviles?orderBy=marca&order=desc&page=2&limit=3
 
                                  ------Autenticación------
                                  
