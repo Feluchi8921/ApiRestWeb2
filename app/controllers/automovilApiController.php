@@ -1,7 +1,7 @@
 <?php
 require_once './app/models/automovilModel.php';
 require_once './app/views/apiView.php';
-//require_once './app/helpers/authApiHelper.php';
+require_once './app/helpers/authApiHelper.php';
 
 class automovilApiController {
     private $model;
@@ -71,11 +71,6 @@ class automovilApiController {
 
     //----------------------------Funcion delete (Ok)--------------------//
     public function deleteAutomovil($params = null) {
-        //borra solo usuario logueado
-        //if(!$this->authHelper->isLoggedIn()){
-           // $this->view->response("No estas logueado", 401);
-           // return;
-        //}
 
         $id = $params[':ID'];
 
@@ -91,11 +86,11 @@ class automovilApiController {
 
     //----------------------------Funcion insert (Ok)--------------------//  
     public function insertAutomovil($params = null) {
-        //borra solo usuario logueado
-        //if(!$this->authHelper->isLoggedIn()){
-            //$this->view->response("No estas logueado", 401);
-            //return;
-        //}
+        //inserta solo usuario logueado
+        if(!$this->authHelper->isLoggedIn()){
+            $this->view->response("No estas logueado", 401);
+            return;
+        }
         
         $automovil = $this->getData();
         if (empty($automovil->marca) || empty($automovil->modelo) || empty($automovil->anio)|| empty($automovil->color)|| empty($automovil->patente)|| empty($automovil->licencia)) {
@@ -109,6 +104,12 @@ class automovilApiController {
     }
         //----------------------------Funcion edit (ok)--------------------//
     function editAutomovil($params = null) {
+        //edita solo usuario logueado
+        if(!$this->authHelper->isLoggedIn()){
+            $this->view->response("No estas logueado", 401);
+            return;
+        }
+        
         $id_automovil = $params[':ID'];
         $automovil=$this->model->get($id_automovil);
         if ($automovil) {
@@ -121,4 +122,4 @@ class automovilApiController {
             return $this->view->response("El automovil con el id=$automovil no existe", 404);
         }
     }
-}
+    }

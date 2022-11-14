@@ -3,6 +3,8 @@ require_once './app/models/viajeModel.php';
 require_once './app/models/automovilModel.php';
 require_once './app/views/apiView.php';
 require_once './app/helpers/authApiHelper.php';
+require_once './app/models/userModel.php';
+
 
 function base64url_encode($data) {
     return rtrim(strtr(base64_encode($data), '+/', '-_'), '=');
@@ -17,7 +19,7 @@ class AuthApiController {
     private $data;
 
     public function __construct() {
-        //$this->model = new TaskModel();
+        $this->model = new UserModel();
         $this->view = new ApiView();
         $this->authHelper = new AuthApiHelper();
         
@@ -48,15 +50,21 @@ class AuthApiController {
         $userpass = explode(":", $userpass);
         $user = $userpass[0];
         $pass = $userpass[1];
-        if($user == "admin123" && $pass == '$2a$12$a.BU6mO2.60bUOmsUNS7BuJc6reGqj7SacZ3R/bQWMrhrC.OXN5oa'){
-            //  crear un token
+        //busco el usuario por email
+        $userdb = $this->model->getUser($user, $pass);
+        //var_dump($userdb);
+        // verifico que el usuario existe y que las contraseñas son iguales
+        //var_dump("pass: $pass");
+        //var_dump("password $userdb->password");
+        if ($user&&($pass==$userdb->password)) {
+    
             $header = array(
                 'alg' => 'HS256',
                 'typ' => 'JWT'
             );
             $payload = array(
                 'id' => 1,
-                'name' => "admin123",
+                'name' => "$user",
                 'exp' => time()+3600
             );
             $header = base64url_encode(json_encode($header));
@@ -69,6 +77,5 @@ class AuthApiController {
             $this->view->response('No autorizado', 401);
         }
     }
-
 
 }

@@ -13,8 +13,7 @@ class UserModel
     public function getUser($email, $password)
     {
         $query = $this->db->prepare("SELECT * FROM user WHERE email = ? AND password = ?");
-        $query->execute($email, $password);
-        var_dump($query);
+        $query->execute([$email, $password]);
         return $query->fetch(PDO::FETCH_OBJ);
     }
 }
