@@ -79,11 +79,10 @@ class ViajeApiController {
     public function deleteViaje($params = null) {
 
         $id_viaje = $params[':ID'];
-        var_dump($id_viaje);
         $viaje = $this->model->get($id_viaje);
         if (!empty($viaje)) {
             $this->model->delete($id_viaje);
-            $this->view->response("EL viaje "+$viaje+ "se eliminó correctamente");
+            $this->view->response("El viaje con id=$id_viaje se elimino correctamente");
         } 
         else {
             $this->view->response("El viaje con el id=$id_viaje no existe", 404);
@@ -106,7 +105,7 @@ class ViajeApiController {
         else {
             $id_viaje = $this->model->insert($viaje->salida, $viaje->destino, $viaje->dia, $viaje->horario, $viaje->lugares, $viaje->mascota, $viaje->precio, $viaje->datos, $viaje->id_automovil);
             $viaje=$this->model->get($id_viaje); 
-            $this->view->response("El viaje con el id=$id_viaje se insertó con éxito", 201);
+            $this->view->response("El viaje con el id=$id_viaje se inserto con exito", 201);
         }
     }
     //----------------------------Funcion edit (Ok)--------------------//
