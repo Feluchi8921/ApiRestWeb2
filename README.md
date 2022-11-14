@@ -18,7 +18,7 @@ Los endpoint de la API es:
 
 ·Para insertar un viaje (método POST): http://localhost/apiRest/api/viajes?salida=Azul&destino=Tandil&dia=2022-12-17&horario=08:00&lugares=1&mascota=ninguna&precio=1800&datos=traer%mate&id_automovil=6
 
-·Para editar un viaje (método PUT): http://localhost/apiRest/api/viajes/12?salida=Tandil&destino=Balcarse&dia=12-12-2022&horario=11:00&lugares=3&mascota=perro&precio=1500&datos=ninguno&id_automovil=8
+·Para editar un viaje (método PUT): http://localhost/apiRest/api/viajes/ID
 
 ·Para eliminar un viaje por id: http://localhost/apiRest/api/viajes/id/delete
 
@@ -55,6 +55,8 @@ Los endpoint de la API es:
                             Ejemplo:http://localhost/apiRest/api/automoviles/7
 
 ·Para insertar un automovil (método POST): http://localhost/apiRest/api/automovil?marca=Ford&modelo=F100&anio=1990&color=blanca&patente =BJI892&licencia=12856945
+
+·Para editar un automovil (método PUT): http://localhost/apiRest/api/automoviles/ID
 
 ·Para obtener todos los automoviles paginados: http://localhost/apiRest/api/automoviles?page=1&limit=3
 

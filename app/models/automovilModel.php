@@ -51,8 +51,8 @@ class AutomovilModel
 
     public function get($id_automovil)
     {
-        $query = $this->db->prepare("SELECT * FROM automoviles WHERE id_automovil=$id_automovil");
-        $query->execute();
+        $query = $this->db->prepare("SELECT * FROM automoviles WHERE id_automovil=?");
+        $query->execute([$id_automovil]);
         $automoviles = $query->fetchAll(PDO::FETCH_OBJ);
         return $automoviles;
     }
@@ -69,23 +69,12 @@ class AutomovilModel
 
     //----------------------------Funcion edit (Ok)--------------------//
 
-    //primero llamo a la funcion get, que ya esta arriba
-
-    public function edit($marca, $modelo, $anio, $color, $patente, $licencia, $id_automovil)
+    public function update($marca, $modelo, $anio, $color, $patente, $licencia, $id_automovil)
     {
         $query = $this->db->prepare("UPDATE automoviles SET marca=?, modelo=?, anio=?, color=?, patente=?, licencia=? WHERE id_automovil=?");
-        $query->execute(array($marca, $modelo, $anio, $color, $patente, $licencia, $id_automovil));
+        $query->execute([$marca, $modelo, $anio, $color, $patente, $licencia, $id_automovil]);
     }
     
-
-    ///----------------------------Funcion edit (Ok) --------------------//
-    
-    function update($id_automovil, $marca, $modelo, $anio, $color, $patente, $licencia){
-        $sentencia = $this->db->prepare("UPDATE automoviles SET marca=?, modelo=?, anio=?, color=?, patente=?, licencia=?, id_automovil=? WHERE id_automovil=?");
-        $sentencia->execute(array($id_automovil, $marca, $modelo, $anio, $color, $patente, $licencia));
-    }
-
-
     //----------------------------Funcion delete (ok)--------------------//
 
     public function delete($id_automovil)

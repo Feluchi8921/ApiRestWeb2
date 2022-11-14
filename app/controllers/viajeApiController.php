@@ -121,9 +121,9 @@ class ViajeApiController {
         
         if ($viaje) {
             $viaje = $this->getData();
-            $this->model->update($id_viaje, $viaje->salida, $viaje->destino, $viaje->dia, $viaje->horario, $viaje->lugares, $viaje->mascota, $viaje->precio, $viaje->datos, $viaje->id_automovil);
+            $this->model->update($viaje->salida, $viaje->destino, $viaje->dia, $viaje->horario, $viaje->lugares, $viaje->mascota, $viaje->precio, $viaje->datos, $viaje->id_automovil, $id_viaje);
             $viaje = $this->model->get($id_viaje);
-            $this->view->response("El viaje con el id=$id_viaje se actualizó correctamente", 200);
+            $this->view->response("El viaje con el id=$id_viaje se actualizo correctamente", 200);
 
         } else {
             return $this->view->response("El viaje con el id=$id_viaje no existe", 404);

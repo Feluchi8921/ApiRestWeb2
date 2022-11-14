@@ -60,7 +60,7 @@ class ViajeModel
 
     public function insert($salida, $destino, $dia, $horario, $lugares, $mascota, $precio, $datos, $id_automovil)
     {
-        $query = $this->db->prepare("INSERT INTO viajes (salida, destino, dia, horario, lugares, mascota, precio, datos, id_automovil) VALUES(?,?,?,?,?,?,?,?,?)");
+        $query = $this->db->prepare("INSERT INTO viajes(salida, destino, dia, horario, lugares, mascota, precio, datos, id_automovil) VALUES(?,?,?,?,?,?,?,?,?)");
         $query->execute([$salida, $destino, $dia, $horario, $lugares, $mascota, $precio, $datos, $id_automovil]);
 
         return $this->db->lastInsertId();
@@ -77,9 +77,10 @@ class ViajeModel
     
     //----------------------------Funcion edit (Ok) --------------------//
     
-    function update($id_viaje, $salida, $destino, $dia, $horario, $lugares, $mascota, $precio, $datos, $id_automovil){
-        $sentencia = $this->db->prepare("UPDATE viajes SET salida=?, destino=?, dia=?, horario=?, lugares=?, mascota=?, precio=?, datos=?, id_automovil=? WHERE id_viaje=?");
-        $sentencia->execute(array($salida, $destino, $dia, $horario, $lugares, $mascota, $precio, $datos, $id_automovil, $id_viaje));
+    public function update($salida, $destino, $dia, $horario, $lugares, $mascota, $precio, $datos, $id_automovil, $id_viaje)
+    {
+        $query =  $this->db->prepare("UPDATE viajes SET salida=?, destino=?, dia=?, horario=?, lugares=?, mascota=?, precio=?, datos=?, id_automovil=? WHERE id_viaje=?");
+        $query->execute(array($salida, $destino, $dia, $horario, $lugares, $mascota, $precio, $datos, $id_automovil, $id_viaje));
     }
 
 

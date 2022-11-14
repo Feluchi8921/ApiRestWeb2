@@ -107,19 +107,18 @@ class automovilApiController {
         }
 
     }
-        //----------------------------Funcion edit (Ok)--------------------//
-        function editAutomovil($params = null) {
-            $id_automovil = $params[':ID'];
-            $automovil=$this->model->get($id_automovil);
-            
-            if ($automovil) {
-                $automovil = $this->getData();
-                $this->model->update($automovil->marca, $automovil->modelo, $automovil->anio, $automovil->color, $automovil->patente, $automovil->licencia, $id_automovil);
-                $viaje = $this->model->get($id_automovil);
-                $this->view->response("El automovil con el id=$id_automovil se actualizó correctamente", 200);
+        //----------------------------Funcion edit (ok)--------------------//
+    function editAutomovil($params = null) {
+        $id_automovil = $params[':ID'];
+        $automovil=$this->model->get($id_automovil);
+        if ($automovil) {
+            $automovil = $this->getData();
+            $this->model->update($automovil->marca, $automovil->modelo, $automovil->anio, $automovil->color, $automovil->patente, $automovil->licencia, $automovil->id_automovil);
+            $viaje = $this->model->get($id_automovil);
+            $this->view->response("El automovil con el id=$id_automovil se actualizo correctamente", 200);
 
-            } else {
-                return $this->view->response("El automovil con el id=$id_automovil no existe", 404);
-            }
+        } else {
+            return $this->view->response("El automovil con el id=$automovil no existe", 404);
         }
+    }
 }
