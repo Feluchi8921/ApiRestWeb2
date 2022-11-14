@@ -6,7 +6,7 @@ require_once './app/helpers/authApiHelper.php';
 class ViajeApiController {
     private $model;
     private $view;
-    //private $authHelper;
+    private $authHelper;
     private $data;
 
     public function __construct() {
@@ -77,11 +77,6 @@ class ViajeApiController {
     //----------------------------Funcion delete (Ok)--------------------//
 
     public function deleteViaje($params = null) {
-        //borra solo usuario logueado
-        //if(!$this->authHelper->isLoggedIn()){
-            //$this->view->response("No estas logueado", 401);
-            //return;
-        //}
 
         $id_viaje = $params[':ID'];
         var_dump($id_viaje);
@@ -98,10 +93,10 @@ class ViajeApiController {
     
     public function insertViaje($params = null) {
         //inserta solo usuario logueado
-        //if(!$this->authHelper->isLoggedIn()){
-           // $this->view->response("No estas logueado", 401);
-            //return;
-        //}
+        if(!$this->authHelper->isLoggedIn()){
+           $this->view->response("No estas logueado", 401);
+            return;
+        }
 
         $viaje = $this->getData();
         
@@ -116,6 +111,12 @@ class ViajeApiController {
     }
     //----------------------------Funcion edit (Ok)--------------------//
     function editViaje($params = null) {
+        //edita solo usuario logueado
+        if(!$this->authHelper->isLoggedIn()){
+            $this->view->response("No estas logueado", 401);
+            return;
+        }
+
         $id_viaje = $params[':ID'];
         $viaje=$this->model->get($id_viaje);
         
