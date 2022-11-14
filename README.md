@@ -16,9 +16,22 @@ Los endpoint de la API es:
 
 ·Para obtener un viaje por id: http://localhost/apiRest/api/viajes/id
 
-·Para insertar un viaje (método POST): http://localhost/apiRest/api/viajes?salida=Azul&destino=Tandil&dia=2022-12-17&horario=08:00&lugares=1&mascota=ninguna&precio=1800&datos=traer%mate&id_automovil=6
+·Para insertar un viaje (método POST): http://localhost/apiRest/api/viajes
+                                (Pasar variables por el body)
+                                                {
+                                                "salida": "Tandil",
+                                                "destino": "Pehuajo",
+                                                "dia": "2022-12-20",
+                                                "horario": "07:00",
+                                                "lugares": "2",
+                                                "mascota": "ninguna",
+                                                "precio": "3500",
+                                                "datos": "Puntualidad",
+                                                "id_automovil": "6"
+                                                }
 
 ·Para editar un viaje (método PUT): http://localhost/apiRest/api/viajes/ID
+                                (Pasar variables por el body)
 
 ·Para eliminar un viaje por id: http://localhost/apiRest/api/viajes/id/delete
 
@@ -54,7 +67,16 @@ Los endpoint de la API es:
 ·Para obtener un automovil por id: http://localhost/apiRest/api/autmovil/id
                             Ejemplo:http://localhost/apiRest/api/automoviles/7
 
-·Para insertar un automovil (método POST): http://localhost/apiRest/api/automovil?marca=Ford&modelo=F100&anio=1990&color=blanca&patente =BJI892&licencia=12856945
+·Para insertar un automovil (método POST): http://localhost/apiRest/api/automovil
+                                (Pasar variables por el body)
+                                        {
+                                        "marca": "Fiat",
+                                        "modelo": "Uno",
+                                        "anio": "2000",
+                                        "color": "Rojo",
+                                        "patente": "HPO238",
+                                        "licencia": "25569842"
+                                        },
 
 ·Para editar un automovil (método PUT): http://localhost/apiRest/api/automoviles/ID
 
