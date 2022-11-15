@@ -14,6 +14,7 @@ class Route {
         $this->method = $method;
         $this->params = [];
     }
+
     public function match($url, $verb) {
         if($this->verb != $verb){
             return false;
@@ -33,6 +34,7 @@ class Route {
         }
         return true;
     }
+    
     public function run(){
         $controller = $this->controller;  
         $method = $this->method;

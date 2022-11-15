@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 14, 2022 at 04:36 PM
+-- Generation Time: Nov 15, 2022 at 02:38 AM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 7.4.30
 
@@ -43,16 +43,15 @@ CREATE TABLE `automoviles` (
 
 INSERT INTO `automoviles` (`id_automovil`, `marca`, `modelo`, `anio`, `color`, `patente`, `licencia`) VALUES
 (6, 'AUDI', 'A4', 2000, 'Negro', 'JPO258', '32569842'),
-(8, 'Volksvagen', 'Amarok', 2022, 'negro', 'af195ac', '13847028'),
 (9, 'Chevrolet', 'Corsa', 2015, 'blanco', 'LMP979', '14295838'),
-(11, 'Fiat', '128', 1985, 'rojo', 'AIJ987', '28493575'),
+(11, 'Fiat', '128', 1985, 'Azul', 'AIJ987', '28493575'),
 (13, 'Chevrolet', 'Cruze', 1995, 'blanco', 'aig126', '27348298'),
 (14, 'Citroen', 'Berlingo', 1995, 'blanco', 'OPK', '2348998'),
-(15, 'Citroen', 'C4', 200, 'blanco', 'NPK', '2048998'),
 (16, 'Ford', 'Focus', 2013, 'Negro', 'AF123PJ', '28526552'),
-(17, 'Ford', 'Focus', 2013, 'Negro', 'AF123PJ', '28526552'),
-(18, 'Fiat', 'Fiorino', 1988, 'Blanca', 'AHP563', '24563214'),
-(19, 'Chevrolet', 'Cruze', 2023, 'Negro', 'AF568GH', '16563214');
+(18, 'Fiat', 'Uno', 1988, 'Blanco', 'AHP563', '24563214'),
+(20, 'Fiat', 'Uno', 2000, 'Rojo', 'HPO238', '25569842'),
+(23, 'Chevrolet', 'Safira', 2002, 'Gris', 'DJO987', '12393575'),
+(25, 'Volksvagen', 'Vento', 2002, 'Negro', 'DGP135', '128756321');
 
 -- --------------------------------------------------------
 
@@ -99,10 +98,10 @@ CREATE TABLE `viajes` (
 
 INSERT INTO `viajes` (`id_viaje`, `salida`, `destino`, `dia`, `horario`, `lugares`, `mascota`, `precio`, `datos`, `id_automovil`) VALUES
 (10, 'San Alberto', 'Tandil', '2022-12-23', '09:00', '2', 'ninguna', '1800', 'traer mate', 6),
-(12, 'Mar del Plata', 'Balcarse', '2022-12-12', '11:00', '3', 'perro', '1500', 'perro en la caja', 8),
-(13, 'Tandil', 'Azul', '2022-12-17', '08:30', '3', 'ninguna', '1800', '', 8),
-(15, 'Tandil', 'Mar del Plata', '2022-12-25', '09:30', '2', 'perro', '1500', 'En canil obligatorio', 6),
-(17, 'Carlos Tejedor', 'Tandil', '2022-12-23', '09:00', '2', 'ninguna', '1800', 'ninguno', 6);
+(17, 'Carlos Tejedor', 'Tandil', '2022-12-23', '09:00', '2', 'ninguna', '1800', 'ninguno', 6),
+(18, 'Tandil', 'Pehuajo', '2022-12-20', '07:00', '2', 'ninguna', '3500', 'Puntualidad', 6),
+(19, 'Pehuajo', 'Tandil', '2022-12-03', '07:00', '1', 'gato', '2500', 'gato en canil sin excepcion', 14),
+(21, 'Azul', 'Mar del Plata', '2022-12-14', '06:00', '2', 'ninguna', '2200', 'paso a buscar por puerta', 9);
 
 --
 -- Indexes for dumped tables
@@ -135,7 +134,7 @@ ALTER TABLE `viajes`
 -- AUTO_INCREMENT for table `automoviles`
 --
 ALTER TABLE `automoviles`
-  MODIFY `id_automovil` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id_automovil` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `user`
@@ -147,7 +146,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `viajes`
 --
 ALTER TABLE `viajes`
-  MODIFY `id_viaje` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id_viaje` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- Constraints for dumped tables

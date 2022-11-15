@@ -74,22 +74,7 @@ class ViajeApiController {
         }
     }
 
-    //----------------------------Funcion delete (Ok)--------------------//
-
-    public function deleteViaje($params = null) {
-
-        $id_viaje = $params[':ID'];
-        $viaje = $this->model->get($id_viaje);
-        if (!empty($viaje)) {
-            $this->model->delete($id_viaje);
-            $this->view->response("El viaje con id=$id_viaje se elimino correctamente");
-        } 
-        else {
-            $this->view->response("El viaje con el id=$id_viaje no existe", 404);
-    }
-    }
     //----------------------------Funcion insert (Ok)--------------------//
-    
     public function insertViaje($params = null) {
         //inserta solo usuario logueado
         if(!$this->authHelper->isLoggedIn()){
@@ -108,6 +93,7 @@ class ViajeApiController {
             $this->view->response("El viaje con el id=$id_viaje se inserto con exito", 201);
         }
     }
+
     //----------------------------Funcion edit (Ok)--------------------//
     function editViaje($params = null) {
         //edita solo usuario logueado
@@ -130,6 +116,18 @@ class ViajeApiController {
         }
     }
 
+    //----------------------------Funcion delete (Ok)--------------------//
+        public function deleteViaje($params = null) {
 
+            $id_viaje = $params[':ID'];
+            $viaje = $this->model->get($id_viaje);
+            if (!empty($viaje)) {
+                $this->model->delete($id_viaje);
+                $this->view->response("El viaje con id=$id_viaje se elimino correctamente");
+            } 
+            else {
+                $this->view->response("El viaje con el id=$id_viaje no existe", 404);
+        }
+        }
 
 }

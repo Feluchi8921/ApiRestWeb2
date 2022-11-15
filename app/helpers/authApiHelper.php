@@ -1,6 +1,8 @@
 <?php
 
 class AuthApiHelper {
+
+    //----------------------------Funcion getToken (Ok)--------------------//
     function getToken(){
         $auth = $this->getAuthHeader(); // Bearer header.payload.signature
         $auth = explode(" ", $auth);
@@ -24,6 +26,7 @@ class AuthApiHelper {
         return $payload;
     }
 
+    //----------------------------Funcion logged (Ok)--------------------//
     function isLoggedIn(){
         $payload = $this->getToken();
         if(isset($payload->id))
@@ -32,6 +35,7 @@ class AuthApiHelper {
             return false;
     }
 
+    //----------------------------Funcion getAuth (Ok)--------------------//
     function getAuthHeader(){
         $header = "";
         if(isset($_SERVER['HTTP_AUTHORIZATION']))

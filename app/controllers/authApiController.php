@@ -15,7 +15,6 @@ class AuthApiController {
     private $model;
     private $view;
     private $authHelper;
-
     private $data;
 
     public function __construct() {
@@ -55,7 +54,7 @@ class AuthApiController {
         //var_dump($userdb);
         // verifico que el usuario existe y que las contraseñas son iguales
         //var_dump("pass: $pass");
-        //var_dump("password $userdb->password");
+        //var_dump("password: $userdb->password");
         if ($user&&($pass==$userdb->password)) {
     
             $header = array(
@@ -73,7 +72,8 @@ class AuthApiController {
             $signature = base64url_encode($signature);
             $token = "$header.$payload.$signature";
              $this->view->response($token);
-        }else{
+        }
+        else{
             $this->view->response('No autorizado', 401);
         }
     }

@@ -15,21 +15,19 @@ class AutomovilModel
      public function getAll($orderBy, $order, $limit, $page, $column, $filtervalue){
        
         $params = []; 
-        
-        $query_sentence = "SELECT * FROM automoviles";
+        $query_sentence = "SELECT * FROM automoviles"; //primera sentencia, basica
         
         if($column != null){
-            $query_sentence .= " WHERE  $column = ?";
+            $query_sentence .= " WHERE  $column = ?"; //empiezo a agregar 
             array_push($params, $filtervalue);
         }
 
         if($orderBy != null){
             $query_sentence .= " ORDER BY $orderBy";
-            
         }
+
         if($order != null){
             $query_sentence .= " $order";
-           
         }
        
         if($page == null){
@@ -48,7 +46,6 @@ class AutomovilModel
     }
 
     //----------------------------Funcion get (ok)--------------------//
-
     public function get($id_automovil)
     {
         $query = $this->db->prepare("SELECT * FROM automoviles WHERE id_automovil=?");
@@ -58,7 +55,6 @@ class AutomovilModel
     }
 
     //----------------------------Funcion insert (Ok)--------------------
-
     public function insert($marca, $modelo, $anio, $color, $patente, $licencia)
     {
         $query = $this->db->prepare("INSERT INTO automoviles (marca, modelo, anio, color, patente, licencia) VALUES (?, ?, ?, ?, ?, ?)");

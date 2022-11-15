@@ -14,7 +14,6 @@ class ViajeModel
     public function getAll($orderBy, $order, $limit, $page, $column, $filtervalue){
        
         $params = []; 
-        
         $query_sentence = "SELECT * FROM viajes";
         
         if($column != null){
@@ -24,11 +23,10 @@ class ViajeModel
 
         if($orderBy != null){
             $query_sentence .= " ORDER BY $orderBy";
-            
         }
+
         if($order != null){
-            $query_sentence .= " $order";
-           
+            $query_sentence .= " $order";    
         }
        
         if($page == null){
@@ -54,10 +52,7 @@ class ViajeModel
         return $viaje;
     }
 
-
-
     //----------------------------Funcion insert (Ok) --------------------//
-
     public function insert($salida, $destino, $dia, $horario, $lugares, $mascota, $precio, $datos, $id_automovil)
     {
         $query = $this->db->prepare("INSERT INTO viajes(salida, destino, dia, horario, lugares, mascota, precio, datos, id_automovil) VALUES(?,?,?,?,?,?,?,?,?)");
@@ -65,15 +60,6 @@ class ViajeModel
 
         return $this->db->lastInsertId();
     }
-
-    //----------------------------Funcion delete (Ok) --------------------//
-
-    public function delete($id_viaje)
-    {
-        $query = $this->db->prepare("DELETE FROM viajes WHERE id_viaje=?");
-        $query->execute(array($id_viaje));
-    }
-
     
     //----------------------------Funcion edit (Ok) --------------------//
     
@@ -83,5 +69,10 @@ class ViajeModel
         $query->execute(array($salida, $destino, $dia, $horario, $lugares, $mascota, $precio, $datos, $id_automovil, $id_viaje));
     }
 
-
+    //----------------------------Funcion delete (Ok) --------------------//
+    public function delete($id_viaje)
+    {
+        $query = $this->db->prepare("DELETE FROM viajes WHERE id_viaje=?");
+        $query->execute(array($id_viaje));
+    }
     }

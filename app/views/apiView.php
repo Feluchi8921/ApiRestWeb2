@@ -9,7 +9,7 @@ class ApiView {
         // convierte los datos a un formato json
         echo json_encode($data);
     }
-
+//----------------------------Manejo de errores (Ok) --------------------//
     private function _requestStatus($code){
         $status = array(
           200 => "OK",

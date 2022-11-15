@@ -6,7 +6,7 @@ require_once './app/helpers/authApiHelper.php';
 class automovilApiController {
     private $model;
     private $view;
-    //private $authHelper;
+    private $authHelper;
     private $data;
 
     public function __construct() {
@@ -21,7 +21,6 @@ class automovilApiController {
     private function getData() {
         return json_decode($this->data);
     }
-
 
     //----------------------------Funcion getAll con filtrar, ordenar y paginar (Ok)--------------------//
     public function getAutomoviles() {
@@ -69,20 +68,6 @@ class automovilApiController {
         }
     }
 
-    //----------------------------Funcion delete (Ok)--------------------//
-    public function deleteAutomovil($params = null) {
-
-        $id_automovil = $params[':ID'];
-
-        $automovil = $this->model->get($id_automovil);
-        if ($automovil) {
-            $this->model->delete($id_automovil);
-            $this->view->response("EL automovil con el id=$id_automovil se elimino correctamente");
-        } 
-        else {
-            $this->view->response("El automovil con el id=$id_automovil no existe", 404);
-    }
-    }
 
     //----------------------------Funcion insert (Ok)--------------------//  
     public function insertAutomovil($params = null) {
@@ -102,6 +87,7 @@ class automovilApiController {
         }
 
     }
+    
         //----------------------------Funcion edit (ok)--------------------//
     function editAutomovil($params = null) {
         //edita solo usuario logueado
@@ -121,5 +107,20 @@ class automovilApiController {
         } else {
             return $this->view->response("El automovil con el id=$automovil no existe", 404);
         }
+    }
+    
+    //----------------------------Funcion delete (Ok)--------------------//
+    public function deleteAutomovil($params = null) {
+
+        $id_automovil = $params[':ID'];
+
+        $automovil = $this->model->get($id_automovil);
+        if ($automovil) {
+            $this->model->delete($id_automovil);
+            $this->view->response("EL automovil con el id=$id_automovil se elimino correctamente");
+        } 
+        else {
+            $this->view->response("El automovil con el id=$id_automovil no existe", 404);
+    }
     }
     }
