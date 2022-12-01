@@ -1,23 +1,17 @@
 <?php
 require_once './libs/router.php';
-require_once './app/controllers/viajeApiController.php';
-require_once './app/controllers/automovilApiController.php';
-require_once './app/controllers/authApiController.php';
+require_once './app/controllers/bikeApiController.php';
+
 
 // crea el router
 $router = new Router();
 
 // defina la tabla de ruteo
-$router->addRoute('viajes', 'GET', 'viajeApiController', 'getViajes');
-$router->addRoute('viajes/:ID', 'GET', 'viajeApiController', 'getViaje');
-$router->addRoute('viajes/:ID', 'DELETE', 'viajeApiController', 'deleteViaje');
-$router->addRoute('viajes', 'POST', 'viajeApiController', 'insertViaje'); 
-$router->addRoute('viajes/:ID', 'PUT', 'viajeApiController', 'editViaje');
-$router->addRoute('automoviles', 'GET', 'automovilApiController', 'getAutomoviles');
-$router->addRoute('automoviles/:ID', 'GET', 'automovilApiController', 'getAutomovil');
-$router->addRoute('automoviles/:ID', 'DELETE', 'automovilApiController', 'deleteAutomovil');
-$router->addRoute('automoviles', 'POST', 'automovilApiController', 'insertAutomovil'); 
-$router->addRoute("auth/token", 'GET', 'authApiController', 'getToken');
+$router->addRoute('bikes', 'GET', 'bikeApiController', 'getBikes');
+$router->addRoute('bikes/:ID', 'GET', 'bikeApiController', 'getBike');
+$router->addRoute('bikes/:ID', 'DELETE', 'bikeApiController', 'deleteBike');
+$router->addRoute('bike', 'POST', 'bikeApiController', 'insertBike'); 
+$router->addRoute('bikes/:ID', 'PUT', 'bikeApiController', 'editBike');
 
 // ejecuta la ruta (sea cual sea)
 $router->route($_GET["resource"], $_SERVER['REQUEST_METHOD']);

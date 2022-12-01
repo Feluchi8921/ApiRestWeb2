@@ -1,5 +1,5 @@
 "use strict"
-const URL="http://localhost/refactor-rest/api/viajes"
+const URL="http://localhost/refactor-rest/api/bikes"
 // Obtiene todas las tareas de la API REST
 
 async function getAll(){
@@ -8,18 +8,18 @@ async function getAll(){
     if(!response.ok)
     throw new Error ('El recurso no existe');
 
-    let viajes= await response.json();
-    showViajes(viajes);
+    let bikes= await response.json();
+    showBikes(bikes);
     }
     catch(e){
         console.log(error);
     }
 }
-function showViajes(viajes){
-    let ul=document.querySelector("#viajesList");
+function showBike(bikes){
+    let ul=document.querySelector("#BikeList");
     ul.innerHTML="";
-    for(const viaje of viajes){
-        ul.innerHTML += `<li> ${viaje.salida} | ${viaje.destino} | ${viaje.dia} | ${viaje.horario} | ${viaje.lugares} | ${viaje.mascota} | ${viaje.precio} | ${viaje.datos} | ${viaje.id_automovil}`;
+    for(const bike of bikes){
+        ul.innerHTML += `<li> ${bike.id} | ${bike.make} | ${bike.rolled} | ${bike.price}`;
     }
 }
 
